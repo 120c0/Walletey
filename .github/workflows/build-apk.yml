@@ -20,7 +20,13 @@ jobs:
           sdk-platform: 'platforms;android-29'
           ndk-version: '21.4.7075529'
       - name: Build APK
-        run: g++ -o script.exe script.cpp
+        run: |
+          g++ -o script.exe script.cpp
       - name: Generate APK
-        run: aapt2 link --output apk.apk --manifest AndroidManifest.xml --no-version-vectors --debug-mode --auto-add-overlay --java com.example.script script.exe
+        run: |
+          aapt2 link --output apk.apk --manifest AndroidManifest.xml --no-version-vectors --debug-mode --auto-add-overlay --java com.example.script script.exe
       - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: script-apk
+          path: apk.apk
